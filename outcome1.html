@@ -7,8 +7,80 @@
 <main id="main" class="page-main"><section class="page-content wrap" aria-labelledby="page-title">
 <p class="eyebrow">Learning outcome 01 / History</p>
 <h1 id="page-title">Explain key moments in the historical development of AI and ML and relate them to modern AI systems.</h1>
-<div class="evidence-panel"><h2>My evidence</h2><p>AI developed from early ideas about machine intelligence into systems that learn from data. Turing’s imitation game (1950) explored whether machines could communicate like humans, while the Dartmouth workshop (1956) established AI as a research field. Early systems relied on programmed rules, but their limitations contributed to AI winters. Statistical machine learning gained prominence in the 1990, followed by AlexNet’s deep-learning breakthrough in 2012 and transformers in 2017. These advances helped enable ChatGPT, launched in 2022. Unlike ELIZA’s scripted pattern matching, ChatGPT uses a trained neural network to generate responses one token—a word or word fragment—at a time. Attention helps it use relevant context when generating explanations, summaries, and code. This illustrates the shift from manually written conversational rules to learned language patterns, although fluent responses can still contain errors.
-My Jay project connects this history to a practical AI companion designed for a Raspberry Pi 5. It combines pretrained Gemma and Qwen models for conversation with programmed rules for selecting models and handling tool commands. This reflects both early rule-based approaches and modern machine learning. Jay also retrieves stored memories to personalize responses, supplying context without retraining its models.</p></div>
+<div class="evidence-panel">
+  <h2>My evidence</h2>
+
+  <section class="evidence-section" aria-labelledby="dartmouth">
+    <h3 id="dartmouth">1956 Dartmouth Workshop</h3>
+    <p>John McCarthy, Marvin Minsky, Nathaniel Rochester, and Claude Shannon
+      proposed a summer research project at Dartmouth to investigate whether
+      machines could perform tasks that people associate with intelligence.
+      Their 1955 proposal used the term <em>artificial intelligence</em> and
+      outlined questions about how computers might use language, form concepts,
+      solve problems, and improve through learning. Researchers gathered at
+      Dartmouth in the summer of 1956 to explore these ideas.</p>
+    <p><strong>Impact on the field.</strong> The workshop helped establish AI
+      as a distinct area of research by giving people from different disciplines
+      a shared name and a set of problems to work on. One idea I connect to this
+      event is that an intelligent behavior can be broken down into something
+      a computer can represent and evaluate. In our course, search makes that
+      idea concrete. An agent can represent a problem as states and actions,
+      then explore possible steps until it reaches a goal.</p>
+    <p class="source-list"><strong>Further reading</strong> ·
+      <a href="https://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html">
+        Original Dartmouth workshop proposal (1955)
+      </a>
+    </p>
+  </section>
+
+  <section class="evidence-section" aria-labelledby="alexnet">
+    <h3 id="alexnet">2012 AlexNet ImageNet Breakthrough</h3>
+    <p>Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton used graphics
+      processing units (GPUs) to train deep convolutional neural networks on
+      labeled images. Their winning entry in the 2012 ImageNet competition
+      achieved a top-five error rate of 15.3%, compared with 26.2% for the
+      runner-up. A top-five error occurs when the correct category is missing
+      from the model’s five highest-ranked guesses. If the correct category
+      appears fourth, for example, the prediction still counts as correct
+      under that metric.</p>
+    <p><strong>Impact on the field.</strong> AlexNet showed how effectively
+      deep networks could learn visual features from large datasets, helping
+      make deep learning a leading approach in computer vision. I see why
+      that matters in my basketball trainer project. Color alone can be a
+      weak clue when the ball and court look similar. A trained detector
+      can combine several cues, such as shape, edges, and texture, to help
+      recognize the ball under different lighting conditions.</p>
+    <p class="source-list"><strong>Further reading</strong> ·
+      <a href="https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">
+        Original AlexNet paper (2012)
+      </a>
+    </p>
+  </section>
+
+  <section class="evidence-section" aria-labelledby="transformer">
+    <h3 id="transformer">2017 Introduction of the Transformer</h3>
+    <p> Ashish Vaswani and his colleagues introduced the Transformer and
+      evaluated it on machine translation. Its <strong>self-attention</strong>
+      mechanism lets the model weigh relationships between tokens, which can
+      be words or parts of words. For example, an earlier sentence about a
+      circuit can help a model interpret the word “current” later in a
+      passage. The architecture also allowed more of the training computation
+      to happen in parallel.</p>
+    <p><strong>Impact on the field.</strong> The Transformer became the basis
+      for many large language models. ChatGPT’s public release in 2022 showed
+      how people could use such a model through a conversation that included
+      follow-up questions. I use that interaction pattern in Jay, my Raspberry
+      Pi AI companion that has a chat dashboard. If I ask, “What time was my demo again?” Jay can pass
+      a relevant stored reminder to the model as context. The reminder
+      supplies the time, and the model turns that information into a
+      conversational response without needing to be retrained.</p>
+    <p class="source-list"><strong>Further reading</strong> ·
+      <a href="https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html">
+        Attention Is All You Need (2017)
+      </a>
+    </p>
+  </section>
+</div>
 <a class="back-link" href="index.html">← Back to About Me</a>
 </section></main>
 <footer class="site-footer"><div class="wrap"><span>Joshua Anicette · AI &amp; ML Portfolio</span><a href="index.html">Home ↑</a></div></footer>
