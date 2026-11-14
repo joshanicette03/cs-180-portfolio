@@ -7,9 +7,148 @@
 <main id="main" class="page-main"><section class="page-content wrap" aria-labelledby="page-title">
 <p class="eyebrow">Learning outcome 03 / Techniques</p>
 <h1 id="page-title">Describe how core AI techniques such as search and adversarial reasoning are used to model intelligent behavior.</h1>
-<div class="evidence-panel"><h2>My evidence</h2><p>Core AI techniques such as search and adversarial reasoning model intelligent behavior by allowing an agent to evaluate possible actions and choose how to reach a goal. Search represents a problem as a state space, with an initial state, available actions, transitions between states, and a goal test. This connects to my interest in robotics and my AI companion project: a robot navigating a room could represent its position as a state and its movements as actions. Breadth-first search (BFS) explores states level by level and finds the shortest path when all movements have equal cost, while depth-first search (DFS) explores one branch deeply before backtracking. A* search uses both the cost already traveled, (g(n)), and a heuristic, (h(n)), that estimates the remaining cost. Its evaluation function, (f(n)=g(n)+h(n)), helps prioritize promising routes.
+<div class="evidence-panel">
+  <h2>My evidence</h2>
 
-Adversarial reasoning models decision-making when an opponent’s actions affect the outcome. This relates to my interest in basketball and soccer, where choosing an action requires anticipating how a defender might respond. In a simplified basketball simulation, an agent could consider shooting, passing, or driving, then evaluate possible defensive responses using a game tree. Minimax selects the action with the best outcome assuming the opponent chooses the strongest response, while a utility function assigns values to outcomes. Alpha-beta pruning improves efficiency by skipping branches that cannot change the minimax decision. Although real sports involve uncertainty and simultaneous actions, this model illustrates how an agent can plan beyond its immediate move. Together, search and adversarial reasoning demonstrate intelligent behavior through goal-directed planning, evaluation of alternatives, and anticipation of consequences.</p></div>
+  <section class="evidence-section" aria-labelledby="astar">
+    <h3 id="astar">A* Search · Finding the Fastest FPGA Verification Workflow</h3>
+
+    <p>
+      Before an FPGA demo, I want to find the fastest workflow that
+      produces a verified bitstream, the file used to configure the FPGA.
+      In this hypothetical example, my <strong>state space</strong>
+      represents the different stages of the workflow. The
+      <strong>initial state</strong> is Start. An <strong>action</strong>
+      such as running a simulation causes a <strong>transition</strong>
+      to a new state. Each action has a <strong>step cost</strong> in
+      minutes. The <strong>goal test</strong> passes when the bitstream
+      has been built and verified.
+    </p>
+
+    <ul>
+      <li><strong>Full build and checks.</strong> Start → Done costs 11 minutes.</li>
+      <li><strong>Clean build.</strong> Start → Clean Workspace → Done costs 2 + 8 = 10 minutes.</li>
+      <li><strong>Simulation first.</strong> Start → Simulated → Built → Done costs 3 + 4 + 2 = 9 minutes.</li>
+    </ul>
+
+    <p>
+      A* ranks the <strong>frontier</strong>, the states it has discovered
+      but has yet to expand, using <var>f</var> = <var>g</var> + <var>h</var>.
+      Here, <var>g</var> is the time spent reaching a state, and
+      <var>h</var> estimates the time remaining. I use estimates of 5
+      minutes for Simulated, 8 for Clean Workspace, 2 for Built, and 0
+      for Done. These estimates are <strong>admissible</strong> because
+      none exceeds the actual time remaining from its state. For
+      example, Simulated has 6 minutes of work left, so 5 is a valid estimate.
+    </p>
+
+    <ol>
+      <li>Expand Start. The frontier contains Simulated (3 + 5 = 8),
+        Clean Workspace (2 + 8 = 10), and Done (11 + 0 = 11).</li>
+      <li>Expand Simulated because it has the lowest score. This adds
+        Built to the frontier with a score of 7 + 2 = 9.</li>
+      <li>Expand Built. This finds a better path to Done and updates its
+        score from 11 to 9.</li>
+      <li>Remove Done from the frontier and return the
+        <strong>9-minute simulation-first workflow</strong>.</li>
+    </ol>
+
+    <p>
+      The 11-minute route reaches the goal in a single step, so
+      breadth-first search would find it first. A* continues after
+      discovering that route because the frontier still contains states
+      that could lead to a faster solution.
+    </p>
+  </section>
+
+  <section class="evidence-section" aria-labelledby="q-learning">
+    <h3 id="q-learning">Q-Learning · Controlling the Fan in My AI Companion</h3>
+
+    <p>
+      Jay is my AI companion project, designed to run locally on a
+      Raspberry Pi. I could build a simulator to study how Jay might
+      manage its cooling fan during a fixed workload. The
+      <strong>agent</strong> observes a temperature <strong>state</strong>
+      of cool, warm, or hot, then takes an <strong>action</strong> by
+      choosing low or high fan speed. The simulator returns a
+      <strong>reward</strong> based on the next temperature. A cool
+      state earns +2, warm earns 0, and hot earns −5. High speed costs
+      another point to represent additional power use.
+    </p>
+
+    <p>
+      A <strong>Q-value</strong> estimates the expected discounted
+      total reward from taking an action in a state and following the
+      best actions afterward. Suppose the board starts warm and high
+      fan speed cools it down. The immediate reward is +1 because
+      cooling earns +2 and high speed costs 1. If Q(warm, high) starts
+      at 0 and the best estimated Q-value in the cool state is 2, a
+      <strong>learning rate</strong> of 0.5 and a
+      <strong>discount factor</strong> of 0.9 give this update:
+    </p>
+
+    <p><strong>Q(warm, high) = 0 + 0.5 × [1 + 0.9 × 2 − 0] = 1.4</strong></p>
+
+    <p>
+      On another trial, suppose low speed lets the board go from warm
+      to hot, earning −5. If Q(warm, low) and the best estimated
+      Q-value in the hot state both start at 0, the update is:
+    </p>
+
+    <p><strong>Q(warm, low) = 0 + 0.5 × [−5 + 0.9 × 0 − 0] = −2.5</strong></p>
+
+    <p>
+      With those estimates, <strong>exploitation</strong> means choosing
+      high speed when the board is warm because 1.4 is greater than
+      −2.5. An <strong>epsilon-greedy policy</strong> also allows
+      <strong>exploration</strong> by occasionally choosing a random
+      speed. Over repeated trials, the agent can learn that high speed
+      is worth the extra power when the board is warm and that low
+      speed can be preferable when it reliably keeps the board cool.
+    </p>
+  </section>
+
+  <section class="evidence-section" aria-labelledby="minimax">
+    <h3 id="minimax">Minimax · Anticipating a Basketball Defender</h3>
+
+    <p>
+      In a simplified basketball drill, I need to decide whether to
+      shoot or pass. I represent the decision as a two-turn
+      <strong>game tree</strong>. The offense is the maximizing player
+      and moves first. The defender is the minimizing player and
+      responds. Each <strong>leaf node</strong> has a hypothetical
+      <strong>utility</strong> that rates how favorable the outcome is
+      for the offense.
+    </p>
+
+    <ul>
+      <li><strong>Shoot.</strong> A defender who contests gives the
+        offense a utility of 0. A defender who stays back gives it 3.</li>
+      <li><strong>Pass.</strong> A defender who cuts off the passing
+        lane gives the offense a utility of 1. A defender who stays
+        with the shooter gives it 2.</li>
+    </ul>
+
+    <p>
+      <strong>Minimax</strong> assumes the defender picks the response
+      that gives the offense the lowest utility. Shooting therefore
+      has a minimax value of 0, and passing has a value of 1. The
+      offense selects <strong>pass</strong> because it gives the better
+      result against the defender’s strongest response.
+    </p>
+
+    <p>
+      <strong>Alpha-beta pruning</strong> can reach the same decision
+      with fewer evaluations. If the algorithm checks passing first,
+      the offense has an option worth 1. When the algorithm checks
+      shooting and sees that a contest gives it 0, the shooting branch
+      can finish with a value of at most 0. The defender already has
+      a response that makes shooting worse than passing, so the
+      algorithm can skip evaluating what happens if t he defender
+      stays back.
+    </p>
+  </section>
+</div>
 <a class="back-link" href="index.html">← Back to About Me</a>
 </section></main>
 <footer class="site-footer"><div class="wrap"><span>Joshua Anicette · AI &amp; ML Portfolio</span><a href="index.html">Home ↑</a></div></footer>
